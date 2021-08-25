@@ -39,6 +39,7 @@
 import Post from "./components/Post.vue";
 
 import PostList from "./components/PostList.vue";
+import { mapActions } from "vuex";
 
 export default {
   name: "App",
@@ -46,7 +47,12 @@ export default {
     Post,
     PostList,
   },
-
+  created() {
+    this.loadPostList();
+  },
+  methods: {
+    ...mapActions(["loadPostList"]),
+  },
 };
 </script>
 

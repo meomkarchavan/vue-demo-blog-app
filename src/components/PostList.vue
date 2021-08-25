@@ -1,34 +1,33 @@
 <template>
   <div>
-    <ul class="list-group">
-      <li
-        v-for="post in postList"
-        :key="post.id"
-        @click="setPost(post)"
-        class="list-group-item list-group-item-action"
-        :class="{ active: active_el == post.id }"
-      >
-        <h5>
-          {{ post.title }}
-          <span class="badge rounded-pill bg-primary">{{ post.likes }}</span>
-        </h5>
-      </li>
-    </ul>
+    <div>
+      <virtual-list
+      style="height: 100vh; overflow-y: auto"
+        :data-key="'id'"
+        :data-sources="postList"
+        :data-component="itemComponent"
+      />
+    </div>
   </div>
 </template>
 
 <script>
+import Item from "../components/Item.vue";
+import VirtualList from "vue-virtual-scroll-list";
+
 import { mapState } from "vuex";
 
 export default {
   name: "Post",
-  computed: mapState(["postList", "active_el"]),
-  methods: {
-    setPost(post) {
-      this.$store.commit("setPost", post);
-    },
+  computed: mapState(["postList"]),
+  data(){
+    return{
+      itemComponent: Item,
+    }
   },
+  components: { "virtual-list": VirtualList },
 };
 </script>
 <style>
 </style>
+
