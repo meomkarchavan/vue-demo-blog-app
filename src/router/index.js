@@ -6,9 +6,7 @@ import Contact from '../views/Contact.vue'
 import ContactTest from '../views/ContactTest.vue'
 import Blog from '../views/Blog'
 import FindResult from '../views/FindResult.vue'
-import Post from "../views/Post.vue"
 import EditPost from "../views/EditPost.vue"
-import ViewPost from "../views/ViewPost.vue"
 Vue.use(VueRouter)
 
 const routes = [
@@ -35,28 +33,33 @@ const routes = [
   {
     path: '/blog',
     name: 'Blog',
-    component: Blog
+    component: Blog,
+    // children: [
+      // {
+      //   path: ':id',
+      //   name: 'Find',
+      //   component: FindResult,
+
+      // },
+    //   {
+    //     name: 'Edit',
+    //     path: 'edit',
+    //     component: EditPost,
+    //   },
+    // ]
   },
   {
     path: '/find/:id',
     name: 'Find',
     component: FindResult,
-    props: {PostList:[]}
-  },
-  {
-    path: '/post/:id',
-    component: Post,
+    props: {post:{}},
     children: [
       {
         path: 'edit',
+        name:'Edit',
         component: EditPost
-      },
-      {
-        path: 'view',
-        component: ViewPost
-      }
-    ]
-  }
+      },]
+  },
 ]
 
 const router = new VueRouter({

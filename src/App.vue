@@ -37,7 +37,7 @@
             </router-link>
           </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0" method="GET" action="/find">
+        <form class="form-inline my-2 my-lg-0">
           <input
             class="form-control mr-sm-2"
             type="search"
@@ -155,7 +155,7 @@ export default {
     findPost() {
       this.postList.map((item) => {
         if (item.id == this.searchId) {
-          this.$router.push({name:'Find',params:{id:item.id,postList:this.postList}})
+          this.$router.push({name:'Find',params:{id:item.id,post:item}})
         }
       });
     },
