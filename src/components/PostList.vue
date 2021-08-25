@@ -5,10 +5,10 @@
         v-for="post in postList"
         :key="post.id"
         @click="$emit('selectId', post)"
-        class="list-group-item list-group-item-action"
+        class="list-group-item list-group-item-action "
         :class="{ active: active_el==post.id }"
       >
-        <h5>
+        <h5 style="text-align:left">
           {{ post.title }}
           <span class="badge rounded-pill bg-primary">{{ post.likes }}</span>
         </h5>
@@ -21,7 +21,7 @@
 export default {
   name: "Post",
   props: {
-    postList: Array,
+    postList: Object,
     active_el:Number
   },
 };

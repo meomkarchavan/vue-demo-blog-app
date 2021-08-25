@@ -1,7 +1,7 @@
 <template>
-  <div class="container-fluid">
+  <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#">Blog App</a>
       <button
         class="navbar-toggler"
         type="button"
@@ -16,44 +16,57 @@
 
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <router-link to="/" class="nav-link active">Home</router-link>
+          </li>
           <li class="nav-item active">
-            <a class="nav-link" href="#"
-              >Home <span class="sr-only">(current)</span></a
+            <router-link
+              :to="{ name: 'Blog', params: postList }"
+              class="nav-link active"
+              >Blog</router-link
             >
           </li>
+          <li class="nav-item">
+            <router-link to="/about" class="nav-link active"
+              >About Us</router-link
+            >
+          </li>
+          <li class="nav-item">
+            <router-link to="/contact" class="nav-link active">
+              Contact Us
+            </router-link>
+          </li>
         </ul>
+        <form class="form-inline my-2 my-lg-0">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+            name="id"
+            v-model="searchId"
+          />
+          <button
+            class="btn btn-outline-success my-2 my-sm-0"
+            @click.prevent="findPost"
+          >
+            Search
+          </button>
+        </form>
       </div>
     </nav>
-    <div class="container-fluid mt-2 col-md-12">
-      <div class="row">
-        <div class="col-4">
-          <PostList
-            :postList="postList"
-            @selectId="showPost"
-            :active_el="active_el"
-          ></PostList>
-        </div>
-        <div class="col-8">
-          <Post :post="post" @like="likePost"></Post>
-        </div>
-      </div>
-    </div>
+
+    <router-view />
   </div>
 </template>
 
 <script>
-import Post from "./components/Post.vue";
-
-import PostList from "./components/PostList.vue";
-
 export default {
   name: "App",
-  components: {
-    Post,
-    PostList,
-  },
+  components: {},
   data() {
     return {
+      searchId: null,
       postList: [
         {
           id: 0,
@@ -87,7 +100,7 @@ export default {
           likes: 0,
           imageUrl: "http://placeimg.com/900/300/business",
         },
-         {
+        {
           id: 4,
           title: "Veniam ad exercitation ",
           content:
@@ -95,7 +108,7 @@ export default {
           likes: 0,
           imageUrl: "http://placeimg.com/900/300/business",
         },
-         {
+        {
           id: 5,
           title: "Nulla adipisicing exercitation ",
           content:
@@ -103,7 +116,7 @@ export default {
           likes: 0,
           imageUrl: "http://placeimg.com/900/300/business",
         },
-         {
+        {
           id: 6,
           title: "Occaecat ex in cillum laborum",
           content:
@@ -111,7 +124,7 @@ export default {
           likes: 0,
           imageUrl: "http://placeimg.com/900/300/business",
         },
-         {
+        {
           id: 7,
           title: "Esse consequat sunt ullamco",
           content:
@@ -119,7 +132,7 @@ export default {
           likes: 0,
           imageUrl: "http://placeimg.com/900/300/business",
         },
-         {
+        {
           id: 8,
           title: "Tempor cupidatat incididunt ",
           content:
@@ -127,7 +140,7 @@ export default {
           likes: 0,
           imageUrl: "http://placeimg.com/900/300/business",
         },
-         {
+        {
           id: 9,
           title: "pariatur consequat dolor mollit",
           content:
@@ -136,17 +149,15 @@ export default {
           imageUrl: "http://placeimg.com/900/300/business",
         },
       ],
-      active_el: 0,
-      post: {},
     };
   },
   methods: {
-    showPost(post) {
-      this.active_el = post.id;
-      this.post = post;
-    },
-    likePost(post) {
-      post.likes++;
+    findPost() {
+      this.postList.map((item) => {
+        if (item.id == this.searchId) {
+          this.$router.push({name:'Find',params:{id:item.id,post:item}})
+        }
+      });
     },
   },
 };
@@ -159,6 +170,5 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
 }
 </style>
