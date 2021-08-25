@@ -4,9 +4,9 @@
       <li
         v-for="post in postList"
         :key="post.id"
-        @click="$emit('selectId', post)"
+        @click="setPost(post)"
         class="list-group-item list-group-item-action"
-        :class="{ active: active_el==post.id }"
+        :class="{ active: active_el == post.id }"
       >
         <h5>
           {{ post.title }}
@@ -18,11 +18,15 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Post",
-  props: {
-    postList: Array,
-    active_el:Number
+  computed: mapState(["postList", "active_el"]),
+  methods: {
+    setPost(post) {
+      this.$store.commit("setPost", post);
+    },
   },
 };
 </script>

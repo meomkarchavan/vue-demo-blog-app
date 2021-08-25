@@ -7,24 +7,26 @@
     </div>
     <button
       v-if="post.title != null"
-      @click="$emit('like', post)"
+      @click="likePost(post)"
       type="button"
       class="btn btn-primary mt-2"
     >
       Likes : {{ post.likes }}
     </button>
-
-    
   </div>
 </template>
 
 <script>
+import { mapState } from "vuex";
+
 export default {
   name: "Post",
-  props: {
-    post: Object,
+  computed: mapState(["post", "active_el"]),
+  methods: {
+    likePost(post) {
+      this.$store.commit("likePost", post);
+    },
   },
-  
 };
 </script>
 <style>
